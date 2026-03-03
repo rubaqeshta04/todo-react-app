@@ -1,16 +1,57 @@
-# React + Vite
+Todo-List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+View Live Demo
 
-Currently, two official plugins are available:
+Description:
+This application helps users manage their daily tasks in a simple and efficient way. It focuses on clean UI design, smooth user experience, and fast performance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Features:
+➕ Add new tasks
 
-## React Compiler
+✅ Mark tasks as completed
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+❌ Delete tasks
 
-## Expanding the ESLint configuration
+💾 Automatically save tasks in Local Storage
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🔄 Restore tasks after page refresh
+
+📱 Fully responsive design
+
+⚡ Fast development environment with Vite
+
+Technologies:
+⚛️ React
+
+⚡ Vite
+
+🎨 Tailwind CSS
+
+🎨 Material-UI (MUI) – for prebuilt React components and styling
+
+🌐 JavaScript (ES6+)
+
+💾 Local Storage
+
+How to Use
+Enter a task in the input field
+
+Click the add button
+
+Click on a task to mark it as completed
+
+Use the delete button to remove a task
+
+Refresh the page — your tasks will still be there ✔️
+
+todo-react-app/
+│
+├── public/
+├── src/
+│ ├── components/
+│ ├── App.jsx
+│ ├── main.jsx
+│
+├── index.html
+├── package.json
+└── README.md
