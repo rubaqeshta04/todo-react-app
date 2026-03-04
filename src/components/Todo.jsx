@@ -21,9 +21,7 @@ import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 
-export default function Todo({ todo }) {
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [showEditDialog, setShowEditDialog] = useState(false);
+export default function Todo({ todo, openDeleteDialog, openEditDialog }) {
   const [updatedTodo, setUpdatedTodo] = useState({
     title: todo.title,
     details: todo.details,
@@ -44,134 +42,14 @@ export default function Todo({ todo }) {
   }
 
   function handleDeleteClicked() {
-    setShowDeleteDialog(true);
+    openDeleteDialog(todo);
   }
-  function handleClosedClicked() {
-    setShowEditDialog(false);
-  }
+
   function handleEdit() {
-    setUpdatedTodo({ title: todo.title, details: todo.details });
-    setShowEditDialog(true);
+    openEditDialog(todo);
   }
   return (
     <>
-      {/* Delete Modal */}
-
-      <Dialog
-        dir="rtl"
-        onClose={() => {
-          setShowDeleteDialog(false);
-        }}
-        open={showDeleteDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          هل انت متاكد من رغبتك في حذف هذه المهمة؟
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            لا يمكنك استرجاع هذه المهمة بعد
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setShowDeleteDialog(false);
-            }}
-          >
-            اغلاق
-          </Button>
-          <Button
-            autoFocus
-            onClick={() => {
-              setShowDeleteDialog(false);
-              const updatedTodos = todos.filter((t) => t.id !== todo.id);
-              setTodos(updatedTodos);
-              localStorage.setItem("todos", JSON.stringify(updatedTodos));
-            }}
-          >
-            موافق
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* ==== Delete Modal ==== */}
-
-      {/* Edit Modal */}
-      <Dialog
-        dir="rtl"
-        onClose={() => {
-          handleClosedClicked(false);
-        }}
-        open={showEditDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          هل انت متاكد من رغبتك في تعديل هذه المهمة؟
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="text"
-            label="عنوان المهمة"
-            fullWidth
-            variant="standard"
-            value={updatedTodo.title}
-            onChange={(e) =>
-              setUpdatedTodo({ ...updatedTodo, title: e.target.value })
-            }
-          />
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="text"
-            label="وصف المهمة"
-            fullWidth
-            variant="standard"
-            value={updatedTodo.details}
-            onChange={(e) =>
-              setUpdatedTodo({ ...updatedTodo, details: e.target.value })
-            }
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setShowEditDialog(false);
-            }}
-          >
-            اغلاق
-          </Button>
-          <Button
-            autoFocus
-            onClick={() => {
-              const updatedTodos = todos.map((t) => {
-                if (t.id === todo.id) {
-                  return {
-                    ...t,
-                    title: updatedTodo.title,
-                    details: updatedTodo.details,
-                  };
-                }
-                return t;
-              });
-              setTodos(updatedTodos);
-              localStorage.setItem("todos", JSON.stringify(updatedTodos));
-              setShowEditDialog(false);
-            }}
-          >
-            موافق
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* === Edit Modal === */}
       <Card
         sx={{
           minWidth: 275,
