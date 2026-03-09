@@ -66,7 +66,6 @@ export default function TodoList() {
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setTitleInput("");
   }
-  // const [alignment, setAlignment] = useState("الكل");
   return (
     <Container maxWidth="sm">
       <Card
