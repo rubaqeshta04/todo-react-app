@@ -2,7 +2,6 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
@@ -10,35 +9,22 @@ import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Container from "@mui/material/Container";
-import { useContext, useState } from "react";
 import { TodosContext } from "../contexts/todosContext";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
+import { ToastContext, useToast } from "../contexts/ToastContext";
+import todosReducer from "../reducers/todosReducer";
+import { useTodosDispatch } from "../contexts/todosContext";
 
 export default function Todo({ todo, openDeleteDialog, openEditDialog }) {
-  const [updatedTodo, setUpdatedTodo] = useState({
-    title: todo.title,
-    details: todo.details,
-  });
-  const { todos, setTodos } = useContext(TodosContext);
+  const dispatch = useTodosDispatch();
+  const { showHideToast } = useToast();
 
   // Event Handlers
   function handleCheckClicked() {
-    const updatedTodos = todos.map((t) => {
-      if (t.id === todo.id) {
-        return { ...t, isCompleted: !t.isCompleted };
-      }
-      return t;
-    });
-
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    dispatch({ type: "toggledCompleted", payload: todo });
+    showHideToast("تم الانتهاء من المهمة ");
   }
 
   function handleDeleteClicked() {

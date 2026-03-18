@@ -3,6 +3,8 @@ import { useState } from "react";
 import TodoList from "./components/TodoList";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TodosContext } from "./contexts/todosContext";
+import { ToastProvider } from "./contexts/ToastContext";
+import TodosProvider from "./contexts/todosContext";
 
 // Others
 import { v4 as uuid4 } from "uuid";
@@ -46,14 +48,16 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <div
-          className="flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-300 min-h-screen p-4"
-          dir="rtl"
-        >
-          <TodosContext.Provider value={{ todos, setTodos }}>
-            <TodoList />
-          </TodosContext.Provider>
-        </div>
+        <TodosProvider>
+          <ToastProvider>
+            <div
+              className="flex items-center justify-center bg--to-br from-slate-100 to-slate-300 min-h-screen p-4"
+              dir="rtl"
+            >
+              <TodoList />
+            </div>
+          </ToastProvider>
+        </TodosProvider>
       </ThemeProvider>
     </>
   );

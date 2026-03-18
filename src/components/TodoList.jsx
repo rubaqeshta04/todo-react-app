@@ -10,27 +10,33 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Todo from "./Todo";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import { useContext, useEffect, useState, useMemo } from "react";
-import { TodosContext } from "../contexts/todosContext";
+import { useEffect, useState, useMemo, useReducer } from "react";
+import { useTodos, useTodosDispatch } from "../contexts/todosContext";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { ToastContext, useToast } from "../contexts/ToastContext";
+import todosReducer from "../reducers/todosReducer";
 
 // Others
 import { v4 as uuid4 } from "uuid";
 
 export default function TodoList() {
   const [titleInput, setTitleInput] = useState("");
-  const { todos, setTodos } = useContext(TodosContext);
   const [displayedTodosType, setDisplayedTodosType] = useState("all");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [todoToEdit, setTodoToEdit] = useState(null);
 
-  // filteration arrays
+  const todos = useTodos();
+  const dispatch = useTodosDispatch();
+  console.log();
+  const { showHideToast } = useToast();
+
+  // filteration array
 
   const completedTodos = useMemo(() => {
     return todos.filter((todo) => {
@@ -58,21 +64,13 @@ export default function TodoList() {
   }
 
   useEffect(() => {
-    const storageTodos = JSON.parse(localStorage.getItem("todos")) || [];
-    setTodos(storageTodos);
+    dispatch({ type: "get" });
   }, []);
 
   function handleAddClick() {
-    const newTodo = {
-      id: uuid4(),
-      title: titleInput,
-      details: "",
-      isCompleted: false,
-    };
-    const updatedTodos = [...todos, newTodo];
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    dispatch({ type: "added", payload: { newTitle: titleInput } });
     setTitleInput("");
+    showHideToast("تمت الاضافة بنجاح");
   }
 
   function openDeleteDialog(todo) {
@@ -129,12 +127,12 @@ export default function TodoList() {
           <Button
             autoFocus
             onClick={() => {
-              const updatedTodos = todos.filter(
-                (t) => t.id !== todoToDelete.id,
-              );
-              setTodos(updatedTodos);
-              localStorage.setItem("todos", JSON.stringify(updatedTodos));
+              dispatch({
+                type: "deleted",
+                payload: { todoId: todoToDelete.id },
+              });
               setShowDeleteDialog(false);
+              showHideToast("تم حذف المهمة بنجاح");
             }}
           >
             موافق
@@ -196,19 +194,9 @@ export default function TodoList() {
           <Button
             autoFocus
             onClick={() => {
-              const updatedTodos = todos.map((t) => {
-                if (t.id === todoToEdit.id) {
-                  return {
-                    ...t,
-                    title: todoToEdit.title,
-                    details: todoToEdit.details,
-                  };
-                }
-                return t;
-              });
-              setTodos(updatedTodos);
-              localStorage.setItem("todos", JSON.stringify(updatedTodos));
+              dispatch({ type: "edited", payload: { todoToEdit } });
               setShowEditDialog(false);
+              showHideToast("تم تعديل المهمة بنجاح");
             }}
           >
             موافق
