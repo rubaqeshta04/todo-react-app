@@ -6,32 +6,32 @@ Description:
 This application helps users manage their daily tasks in a simple and efficient way. It focuses on clean UI design, smooth user experience, and fast performance.
 
 Features:
-➕ Add new tasks
+ Add new tasks
 
-✅ Mark tasks as completed
+ Mark tasks as completed
 
-❌ Delete tasks
+ Delete tasks
 
-💾 Automatically save tasks in Local Storage
+ Automatically save tasks in Local Storage
 
-🔄 Restore tasks after page refresh
+ Restore tasks after page refresh
 
-📱 Fully responsive design
+ Fully responsive design
 
-⚡ Fast development environment with Vite
+ Fast development environment with Vite
 
 Technologies:
-⚛️ React
+ React
 
-⚡ Vite
+ Vite
 
-🎨 Tailwind CSS
+ Tailwind CSS
 
-🎨 Material-UI (MUI) – for prebuilt React components and styling
+ Material-UI (MUI) – for prebuilt React components and styling
 
-🌐 JavaScript (ES6+)
+ JavaScript (ES6+)
 
-💾 Local Storage
+ Local Storage
 
 How to Use
 Enter a task in the input field
